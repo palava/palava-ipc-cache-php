@@ -29,11 +29,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * Adds a flag to the response, that the command may be cached
+ * Adds a flag to the response, that the command may be cached.
  *
  * @author Tobias Sarnowski
  */
 final class CachedWeaver implements CustomPostCallEvent {
+    
     private static final Logger LOG = LoggerFactory.getLogger(CachedWeaver.class);
 
     // for php
@@ -45,10 +46,12 @@ final class CachedWeaver implements CustomPostCallEvent {
     }
 
     @Override
-    public void eventPostCall(Map<String, Object> request, Map<String, Object> response, DetachedConnection connection) {
+    public void eventPostCall(Map<String, Object> request, Map<String, Object> response, 
+        DetachedConnection connection) {
         // get the command class manually
         final String cmd = String.class.cast(request.get(CustomProtocol.COMMAND));
-        final Class command;
+        final Class<?> command;
+        
         try {
             command = Reflection.forName(cmd);
         } catch (ClassNotFoundException e) {
@@ -59,4 +62,5 @@ final class CachedWeaver implements CustomPostCallEvent {
         response.put(CACHED_KEY, command.isAnnotationPresent(Cached.class));
         LOG.trace("Weaved response with {}: {}", CACHED_KEY, response.get(CACHED_KEY));
     }
+    
 }

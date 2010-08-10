@@ -18,17 +18,17 @@ package de.cosmocode.palava.ipc.cache.php;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * Binds {@link CachedWeaver} as eager singleton.
+ * 
  * @author Tobias Sarnowski
  */
 public class PhpCacheModule implements Module {
-    private static final Logger LOG = LoggerFactory.getLogger(PhpCacheModule.class);
 
     @Override
     public void configure(Binder binder) {
         binder.bind(CachedWeaver.class).asEagerSingleton();
     }
+    
 }
