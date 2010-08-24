@@ -30,7 +30,7 @@ class IpcCache extends AbstractPalavaModule {
             $call[Palava::PKEY_COMMAND],
             $call[Palava::PKEY_ARGUMENTS]
         );
-        return json_encode($call);
+        return json_encode($key);
     }
 
     public function oneShot() {
