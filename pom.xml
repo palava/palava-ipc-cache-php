@@ -9,10 +9,10 @@
     <groupId>de.cosmocode.palava</groupId>
     <artifactId>palava-ipc-cache-php</artifactId>
     <name>Palava IPC Cache PHP</name>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <scm>
-        <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-ipc-cache-php/trunk</developerConnection>
+        <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-ipc-cache-php/tags/1.0.1</developerConnection>
     </scm>
 
     <repositories>
