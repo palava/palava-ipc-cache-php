@@ -60,7 +60,7 @@
             <version>[2.3,3)</version>
         </dependency>
 
-        <!-- this dependency is reported as "unused", but it is required by the php sources in thre resources -->
+        <!-- this dependency is reported as "unused", but it is required by the php sources in the resources -->
         <dependency>
             <groupId>de.cosmocode.palava</groupId>
             <artifactId>palava-ipc-json-custom-php</artifactId>
