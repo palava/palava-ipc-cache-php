@@ -19,39 +19,46 @@ package de.cosmocode.palava.ipc.cache.php;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.Inject;
 
 import de.cosmocode.commons.reflect.Reflection;
 import de.cosmocode.palava.core.Registry;
+import de.cosmocode.palava.core.lifecycle.Initializable;
+import de.cosmocode.palava.core.lifecycle.LifecycleException;
 import de.cosmocode.palava.ipc.IpcCommand;
+import de.cosmocode.palava.ipc.IpcConnection;
 import de.cosmocode.palava.ipc.cache.ComplexCacheAnnotation;
 import de.cosmocode.palava.ipc.json.custom.CustomPostCallEvent;
 import de.cosmocode.palava.ipc.json.custom.CustomProtocol;
-import de.cosmocode.palava.ipc.protocol.DetachedConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Adds a flag to the response, that the command may be cached.
  *
  * @author Tobias Sarnowski
  */
-final class CachedWeaver implements CustomPostCallEvent {
+final class CachedWeaver implements CustomPostCallEvent, Initializable {
     
     private static final Logger LOG = LoggerFactory.getLogger(CachedWeaver.class);
 
     // for php
     private static final String CACHED_KEY = "CACHED";
 
+    private final Registry registry;
+
     @Inject
     CachedWeaver(Registry registry) {
+        this.registry = registry;
+    }
+
+    @Override
+    public void initialize() throws LifecycleException {
         registry.register(CustomPostCallEvent.class, this);
     }
 
     @Override
-    public void eventPostCall(Map<String, Object> request, Map<String, Object> response, 
-        DetachedConnection connection) {
+    public void eventPostCall(Map<String, Object> request, Map<String, Object> response, IpcConnection connection) {
         // get the command class manually
         final String cmd = String.class.cast(request.get(CustomProtocol.COMMAND));
         final Class<? extends IpcCommand> command;
